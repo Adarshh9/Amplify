@@ -1,6 +1,6 @@
-## Amplify
+# Amplify
 
-# Image Augmentation Script
+## Image Augmentation Script
 
 This Python script performs image augmentation on a set of input images using a variety of augmentation functions. Image augmentation is a technique commonly used in machine learning and computer vision to increase the diversity of a dataset, leading to better model generalization.
 
