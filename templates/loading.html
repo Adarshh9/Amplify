@@ -1,0 +1,131 @@
+<!-- loading.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loading...</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #222831;
+            color: #DDE6ED;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #00ADB5;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        /* Loading animation */
+        .loading-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .loading-spinner {
+            border: 8px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 8px solid #00ADB5;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Progress bar */
+        .progress-bar-container {
+            width: 80%;
+            margin-top: 30px;
+        }
+
+        .progress-bar {
+            background-color: #393E46;
+            height: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: #00ADB5;
+            border-radius: 10px;
+            width: 0;
+            transition: width 0.5s ease;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Image Augmentation Processing</h1>
+    <div class="loading-container">
+        <p>Please wait while the images are being processed...</p>
+        <div class="loading-spinner"></div>
+        <div class="progress-bar-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+        </div>
+        <p>This may take some time depending on the number of images and selected options.</p>
+    </div>
+
+    <script>
+        function checkProcessingStatus() {
+            fetch('/check_processing_complete')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.processing_complete) {
+                        window.location.href = '/result_page';  // Redirect to the result page
+                    } else {
+                        updateProgressBar();  // Update progress bar
+                        setTimeout(checkProcessingStatus, 1000);  // Check again after 1 second
+                    }
+                })
+                .catch(error => {
+                    console.error('Error checking processing status:', error);
+                    setTimeout(checkProcessingStatus, 1000);  // Retry after 1 second in case of an error
+                });
+        }
+
+        // Start checking the processing status when the page loads
+        checkProcessingStatus();
+
+        // Function to update the progress bar
+        function updateProgressBar() {
+            fetch('/get_progress')
+                .then(response => response.json())
+                .then(data => {
+                    const progressFill = document.getElementById('progressFill');
+                    const progress = data.progress;
+                    progressFill.style.width = `${progress}%`;
+                })
+                .catch(error => {
+                    console.error('Error updating progress bar:', error);
+                });
+        }
+    </script>
+</body>
+
+</html>

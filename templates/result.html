@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Augmentation Result</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #222831; /* Dark background color */
+            color: #DDE6ED; /* Light text color */
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #00ADB5; /* Aqua color for the heading */
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        p {
+            font-size: 18px;
+            margin-bottom: 30px;
+        }
+
+        a {
+            margin-bottom: 15px; /* Add margin between buttons */
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 16px;
+            background-color: #3498db; /* Blue color for the button */
+            color: white;
+            border: none; /* Remove the border */
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #2980b9; /* Darker blue color on hover */
+        }
+
+        /* Reset button styles */
+        button[type="button"] {
+            background-color: #3498db; /* Blue color for the reset button */
+            margin-right: 0; /* Reset margin for the reset button */
+        }
+
+        button[type="button"]:hover {
+            background-color: #2980b9; /* Darker blue color on hover */
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Image Augmentation Result</h1>
+
+    <p>The images have been processed successfully!</p>
+
+    <a href="/download" download>
+        <button type="button">Download Augmented Images</button>
+    </a>
+
+    <!-- Add the reset button here -->
+    <button type="button" onclick="resetPage()">Reset</button>
+
+    <script>
+        // JavaScript function to reset the page and navigate back to index.html
+        function resetPage() {
+            // Make an AJAX request to the reset route
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/reset", true);
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    // Redirect to the index page after successful reset
+                    window.location.href = "/";
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</body>
+
+</html>
