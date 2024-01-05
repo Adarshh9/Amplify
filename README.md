@@ -1,8 +1,5 @@
-# Amplify
+## Amplify
 
-Certainly! Below is a template for a README file that you can use for your image augmentation script:
-
-```markdown
 # Image Augmentation Script
 
 This Python script performs image augmentation on a set of input images using a variety of augmentation functions. Image augmentation is a technique commonly used in machine learning and computer vision to increase the diversity of a dataset, leading to better model generalization.
@@ -52,13 +49,6 @@ pip install Pillow numpy opencv-python
     # tar_filename = 'augmented_images.tar.gz'
     # create_tar_gz(output_dir, tar_filename)
     ```
-
-Certainly! Below is an example content for a "Details" section in the README file, providing more information about the image augmentation script and its website:
-
-```markdown
-# Details
-
-## Image Augmentation Script
 
 ### Overview
 
