@@ -2,7 +2,6 @@ from flask import Flask, render_template, request, send_file, jsonify
 from methods import get_custom_augmented_images, create_tar_gz
 import os
 import threading
-import time
 
 app = Flask(__name__)
 
@@ -19,9 +18,18 @@ def index():
 def upload():
     global processing_complete
     processing_complete = False  # Reset the flag
-    input_dir = 'images/'
     output_dir = 'augmented_images/'
     os.makedirs(output_dir, exist_ok=True)
+
+    # Create 'images' folder dynamically
+    input_dir = 'images/'
+    if os.path.exists(input_dir):
+        for file in os.listdir(input_dir):
+            file_path = os.path.join(input_dir, file)
+            if os.path.isfile(file_path):
+                os.remove(file_path)
+    else:
+        os.makedirs(input_dir, exist_ok=True)
 
     uploaded_files = request.files.getlist("image")
 
@@ -31,11 +39,22 @@ def upload():
 
     selected_options = request.form.getlist('selected_options[]')
 
-    print(selected_options)
-
     # Perform image augmentation
     thread = threading.Thread(target=process_images, args=(input_dir, output_dir, selected_options))
     thread.start()
+
+    # Wait for the thread to complete before deleting the 'images' folder
+    thread.join()
+
+    # Delete 'images' folder and its contents
+    for root, dirs, files in os.walk(input_dir, topdown=False):
+        for file in files:
+            file_path = os.path.join(root, file)
+            os.remove(file_path)
+        for dir in dirs:
+            dir_path = os.path.join(root, dir)
+            os.rmdir(dir_path)
+    os.rmdir(input_dir)
 
     return render_template('loading.html')
 
