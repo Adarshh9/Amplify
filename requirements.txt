@@ -1,0 +1,8 @@
+flask
+PIL
+numpy
+os
+cv2
+tarfile
+threading
+Gunicorn
