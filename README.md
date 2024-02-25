@@ -70,4 +70,7 @@ This project is licensed under the [GNU General Public License v3.0](LICENSE).
 - Image augmentation functions are adapted from common techniques used in data augmentation for computer vision.
 
 Feel free to customize this README to better fit your project. Add any additional information or acknowledgments as needed.
-```
+
+## LIVE SITE
+Visit the live site [here](https://amplify-r86c.onrender.com) to utilize the image augmentation functionalities online.
+
